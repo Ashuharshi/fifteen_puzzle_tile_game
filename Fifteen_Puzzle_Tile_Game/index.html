@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fifteen Puzzle Game</title>
+<link rel="shortcut icon" href="icon.jpg" type="image/x-icon">
+<meta content="#c4cebb" name="theme-color" charset="UTF-8">
+<meta name="description" content="A simple implementation of the classic mini-game Fifteen Sliding Puzzle, using HTML5 DOM document elements and without using Canvas or third party libraries.">
+<meta name="keywords" content="15 Title Puzzle Puzzle, js, HTML5, Sliding, web, base">
+<meta name="author" content="15 Title Puzzle">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
+<style>
+  .chat {
+    position: relative;
+    display: inline;
+    left: 120%;
+    width: 160px;
+    min-width: 300px;
+    max-width: 250px;
+    animation: popFromBottom 5s ease-in-out infinite;
+    z-index: 10;
+    cursor: pointer;
+    top: 0;
+    margin-top: 5%;
+}
+
+@keyframes popFromBottom {
+  0% {
+    transform: translateY(130px) scale(0.6);
+  }
+  100% {
+    transform: translateY(140px) scale(0.8);
+  }
+}
+
+img {
+    width: 80px;
+    height: 80px;
+}
+
+.profile {
+    display:  inline-block;
+    width: 80px;
+    height: 80px;
+    border-radius:  50%;
+    overflow:  hidden;
+    position: absolute;
+    left: -16px;
+    top: -1px;
+    border: 1vmin solid #fff;
+}
+
+.message {
+    background: #ffe271;
+    padding: 20px 50px 20px 80px;
+    border-radius: 0px 50px 50px 0px;
+    font-size: 16px;
+    text-align: left;    
+    font-weight: bolder;
+    text-decoration: none;
+    color: #000000;
+}
+
+.user {
+  text-align: left;
+  padding: 2px 30px 5px 60px;
+  border-radius: 0px 0px 20px;
+  font-size: 16px;
+  background: #fff;
+  color: #83aebd;
+  display: inline-block;
+  float: left;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+
+
+</style>
+<body>  
+  <div class="chat">
+    <a href="./myResume/index.html" target="_blank" rel="noopener noreferrer">
+    <div class="profile">
+        <img src='Me1.jpg' alt='Harshitha'>
+    </div>
+    <div class="message">
+       Dear Sir/Mam, Please Click Here To view my Profile.
+    </div>
+    <div class="user">
+       Harshitha S
+    </div>
+  </a>
+  </div>
+<!-- Design For Circles Bubble Glow -->
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+</ul>
+
+<!-- Design For Square Crystal Up -->
+<i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    
+<!-- Design For Fog Smoke Up -->
+<div class='light x1'></div>
+<div class='light x2'></div>
+<div class='light x3'></div>
+<div class='light x4'></div>
+<div class='light x5'></div>
+<div class='light x6'></div>
+<div class='light x7'></div>
+<div class='light x8'></div>
+<div class='light x9'></div>
+
+<span style="margin-left:-70%;margin-top:20px;font-size:30px;cursor:pointer;z-index:1;color:#fff" onclick="openNav()">&#976; Tool Bar</span>
+
+
+<div id='fifteen' style="cursor:grabbing;" onclick="playsound()"></div> <!--element "fifteen" in which the game will take place-->
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    
+<div class="menuItems">
+    <div style="display:none;position:fixed;"><img id="art" src=""/><a id="dwonload"></a><input id="img_file" type="file" accept="image/png,image/gif,image/jpeg,image/webp"/></div>
+    <div>
+        <table style="border-collapse:collapse;margin:auto;" border="1">
+        <tbody>
+        <tr>
+        <td style="height:48px;" colspan="2"><!-- <div class="button" onclick="img_file.click();">Load img file</div> --><center><h2 style="font-size: 16px;font-weight:800;">15 tile puzzle game<br/><b style="font-size: 12px;"><u>Tool Bar</u></b></h2></center></td>
+        </tr>
+        <tr>
+        <td style="width:68px;height:34px;padding-right:8px;">Difficulty Level</td>
+        <td><input data-toggle="tooltip" data-placement="top" title="Difficulty level" onchange="setup.puzzle_fifteen.diff=this.value;fifteen_update();" value="300" class="input_text" type="number" max="300"></td>
+        </tr>
+        <tr>
+        <td style="height:34px;padding-right:8px;">Width</td>
+        <td><input data-toggle="tooltip" data-placement="top" title="Disabled"  id="width" style="cursor:not-allowed" onchange="setup.puzzle_fifteen.size[0]=parseInt(this.value);fifteen_update();" value="1024" disabled class="input_text" type="text"></td>
+        </tr>
+        <tr>
+        <td style="height:34px;padding-right:8px;">Height</td>
+        <td><input data-toggle="tooltip" data-placement="top" title="Disabled" id="height" style="cursor:not-allowed" onchange="setup.puzzle_fifteen.size[1]=parseInt(this.value);fifteen_update();" value="1281" disabled class="input_text" type="text"></td>
+        </tr>
+        <!-- <tr>
+        <td style="height:34px;padding-right:8px;">Image fill</td>
+        <td align="center"><label class="switch">
+            <input type="checkbox" onchange="setup.puzzle_fifteen.art.ratio=this.checked;fifteen_update();">
+            <span class="slider round"></span>
+        </label></td>
+        </tr> -->
+        <tr>
+        <td style="height:34px;padding-right:8px;">Puzzle Column</td>
+        <td><input data-toggle="tooltip" data-placement="top" title="Puzzles Number of Rows" id="grid_width" onchange="setup.puzzle_fifteen.grid[0]=parseInt(this.value-1);fifteen_update();" value="4" class="input_text" type="number" min="2" max="10"></td>
+        </tr>
+        <tr>
+        <td style="height:34px;padding-right:4px;">Puzzle Row</td>
+        <td><input data-toggle="tooltip" data-placement="top" title="Puzzles Number of Columns" id="grid_height" onchange="setup.puzzle_fifteen.grid[1]=parseInt(this.value-1);fifteen_update();" value="4" class="input_text" type="number" min="2" max="10"></td>
+        </tr>
+        <tr>
+        <td style="height:34px;padding-right:8px;">Speed time</td>
+        <td ><input data-toggle="tooltip" data-placement="top" title="Slide time in Milli Seconds" onchange="setup.puzzle_fifteen.time=this.value;fifteen_update();" value="0.4" class="input_text" type="number" min="0.1" max="2.0" step="0.1"></td>
+        </tr>
+        <tr>
+        <td style="height:34px;padding-right:8px;">Add Numbers</td>
+        <td align="center"><label class="switch">
+            <input data-toggle="tooltip" data-placement="top" title="Turn On Add Numbers" type="checkbox" checked onchange="setup.puzzle_fifteen.number=this.checked;fifteen_update();">
+            <span class="slider round"></span>
+        </label></td>
+        </tr>
+        <tr>
+        <td style="height:34px">Full Screen</td>
+        <td align="center"><label class="switch">
+            <input data-toggle="tooltip" data-placement="top" title="Turn On Full Screen Mode" type="checkbox" onchange="setup.puzzle_fifteen.fill=this.checked;if(!this.checked){window.removeEventListener('resize',fifteen_resize,true);f.style.transform='scale(1)'};fifteen_update();">
+            <span class="slider round"></span>
+        </label></td>
+        </tr>
+        <tr>
+        <td style="height:34px;">Test Case</td>
+        <td><!-- <input id="slot_style" onchange="setup.puzzle_fifteen.style=this.value;fifteen_update();" class="input_text" type="color">--><a href="./Unit_Test_Case.pdf" target="_blank" style="font-size:14px;color:red"><u>Unit Test Case</u></a></td>
+        </tr>
+        <tr>
+        <td style="height:48px;" colspan="2"><div class="button" data-toggle="tooltip" data-placement="top" title="Reset" onclick="fifteen_update();">Reset</div></td>
+        </tr>
+        <!-- <tr>
+        <td style="height:48px;" colspan="2"><div class="button" data-toggle="tooltip" data-placement="top" title="Upload New Image To Puzzle" onclick="fifteen_build();">Create HTML game</div></td>
+        </tr> -->
+        <!-- <tr><td style="height:16px;" colspan="2"></td></tr> -->
+        <tr>
+        <td  colspan="2"><a href='#' target='_blank'><img src="Me1.jpg" class="rounded-circle mx-auto d-block" alt="Harshitha S" height="80px" width="80px"/></a><a href='#' target='_blank'><span style="margin-left: 26px;font-size:16px;font-weight:bolder;color:#000000">By Harshitha S</span> </a></td>
+        </tr>
+        <!-- <tr>
+        <td style="height:48px;" colspan="2" align="center"></td>
+        </tr> -->
+        </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+
+<script>
+  const clickAudio = new Audio("./audio/jumpSound.wav");
+  function playsound(){
+    clickAudio.play();
+  }
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "350px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+
+
+    var img_file=document.getElementById("img_file"),img=document.getElementById("art"),file;    
+    console.log("img_file", img_file);
+var setup={
+     puzzle_fifteen:{
+        diff:300, // number of movements of the slots for shuffling pictures
+        size:[512,512], // element size "fifteen" in pixels only
+        grid:[3,3], // the number of squares in the height and width of the picture
+        fill:false, // Stretching the area with the game to fit the element is recommended for fullscreen
+        number:true, // Slot sequence number
+        art:{
+            url:"art.jpg", // path to the picture (you can use any format of supported browsers, gif-animation of svg)
+            ratio:false // enlarge the picture in height or width
+        },
+        // optional elements
+        keyBoard:true, // Control using the keys on the keyboard
+        gamePad:true, // Control using the joystick on the Gamepad
+        time:0.1, // block move animation time
+        style:"background-color:#c4cebb;display:grid;justify-items:center;align-items:center;font-family:Arial;color:#fff;border:2px solid #fff;border-radius:5px;font-size:32px;font-family:Algerian;font-weight:bold;" // style for puzzle square
+     }
+}
+      
+slot_style.value=setup.puzzle_fifteen.style;
+img_file.addEventListener('change',loadFiles);
+function loadFiles(e){
+    file=img_file.files[0];
+    adden_file();
+    console.log("file added", file)
+}
+
+function adden_file(){
+    setup.puzzle_fifteen.art.url=window.URL.createObjectURL(file)
+    img.src=setup.puzzle_fifteen.art.url;
+    img.onload=function(){setup.puzzle_fifteen.size=[img.width,img.height];auto_grid();auto_style();fifteen_update();}
+}
+function auto_grid(){
+    var s=setup.puzzle_fifteen
+    if(s.size[1]<s.size[0]){s.grid=[Math.round(s.size[0]/(s.size[1]/4))-1,3]}
+    else{s.grid=[3,Math.round(s.size[1]/(s.size[0]/4))-1]}
+    grid_width.value=s.grid[0];
+    grid_height.value=s.grid[1];
+    width.value=s.size[0];
+    height.value=s.size[1];
+}
+function auto_style(){
+    var s=setup.puzzle_fifteen,v,i;
+    if(s.size[1]<s.size[0]){v=Math.round((s.size[0]/s.grid[0])/16)}
+    else{v=Math.round((s.size[1]/s.grid[1])/16)}
+    d=s.style.split(";");
+    for(i=0;i<d.length;i++){
+        if(d[i].includes("border-radius")){s.style=s.style.replace(d[i],"border-radius:"+Math.round(v*1.5)+"px")}
+        else if(d[i].includes("font-size")){s.style=s.style.replace(d[i],"font-size:"+(v*3)+"px")}
+    }slot_style.value=s.style;
+}
+function fifteen_update(){
+    f.innerHTML="";
+    ceation_slots();
+}
+
+function fifteen_build(){
+    var reader=new FileReader();
+    if(file){reader.readAsDataURL(file);}else{alert('Please upload a file with a picture')}
+    reader.onload=function(){setup.puzzle_fifteen.art.url=reader.result;gen_file();}
+    reader.onerror=function(error){alert('Error: '+error);}
+    function gen_file(){
+        var url="fifteen_puzzle.js";
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function(){
+            if(this.readyState==4&&this.status==200){
+                var html="data:text/json;charset=utf-8,"+encodeURIComponent("<!DOCTYPE html>\n<html>\n<head>\n<style>\n body{height:97vh;padding:0;display:grid;align-content:center;justify-content:center;}\n</style>\n</head>\n<body>\n<div id='fifteen'></div>\n<script>\n"+this.responseText.replace("setup.puzzle_fifteen",JSON.stringify(setup.puzzle_fifteen,null,'\t'))+"\n<\/script>\n<\/body>\n<\/html>");
+                var a=document.getElementById('dwonload');
+                a.setAttribute("href", html );
+                a.setAttribute("download","index.html");
+                a.click();
+            }
+        };
+        xmlhttp.open("GET",url,true);
+        xmlhttp.send();
+        xmlhttp.onerror=function(){if(this.status==0){alert('runetime not loaded');}}
+    }
+}
+
+var drop = {
+    init:function(){
+        if (window.File&&window.FileReader&&window.FileList&&window.Blob) {
+            window.addEventListener("dragover",function(e){
+                e.preventDefault();
+                e.stopPropagation();
+            });
+            window.addEventListener("drop",function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                file=e.dataTransfer.files[0];
+                adden_file();
+            });
+        }
+    },
+};
+
+window.addEventListener("DOMContentLoaded", drop.init);
+
+</script>
+<script src="fifteen_puzzle.js"></script> <!--path to file engine-->
+</body>
+</html>
